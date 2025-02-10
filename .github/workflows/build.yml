@@ -1,0 +1,29 @@
+name: Build
+
+on:
+  schedule:
+    - cron: "* */24 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      env:
+        GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
+    - name: Use Node.js 20
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: '.node-version'
+        cache: 'npm'
+    - run: npm install
+    - run: npm run build
+    - run: npm run run ${{ github.repository_owner }} 9
+    - name: Push profile-summary-card-output
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add profile-summary-card-output
+        git commit -m "Update profile-summary-card-output" || exit 0
+        git push
