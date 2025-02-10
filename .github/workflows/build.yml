@@ -10,8 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-      env:
-        GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
     - name: Use Node.js 20
       uses: actions/setup-node@v4
       with:
@@ -20,6 +18,8 @@ jobs:
     - run: npm install
     - run: npm run build
     - run: npm run run ${{ github.repository_owner }} 9
+      env:
+        GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
     - name: Push profile-summary-card-output
       run: |
         git config --global user.name "github-actions[bot]"
