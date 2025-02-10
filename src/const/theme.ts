@@ -40,7 +40,7 @@ ThemeMap.set('ayu_mirage', new Theme('#f4cd7c', '#c7c8c2', '#ffffff00', '#000000
 ThemeMap.set('bear', new Theme('#e03c8a', '#bcb28d', '#ffffff00', '#000000', 0, '#00aeff', '#e03c8a'));
 ThemeMap.set('blue_green', new Theme('#2f97c1', '#0cf574', '#ffffff00', '#000000', 0, '#f5b700', '#2f97c1'));
 ThemeMap.set('blueberry', new Theme('#82aaff', '#27e8a7', '#ffffff00', '#000000', 0, '#89ddff', '#82aaff'));
-ThemeMap.set('buefy', new Theme('#7957d5', '#363636', '#ffffff00', '#000000', 0, '#ff3860', '#7957d5'));
+ThemeMap.set('buefy', new Theme('#7957d5', '#a88df2', '#ffffff00', '#000000', 0, '#ff3860', '#7957d5'));
 ThemeMap.set('calm', new Theme('#e07a5f', '#ebcfb2', '#ffffff00', '#000000', 0, '#edae49', '#e07a5f'));
 ThemeMap.set('chartreuse_dark', new Theme('#7fff00', '#fff', '#ffffff00', '#000000', 1, '#00aeff', '#7fff00'));
 ThemeMap.set('city_lights', new Theme('#5d8cb3', '#718ca1', '#ffffff00', '#000000', 0, '#4798ff', '#5d8cb3'));
