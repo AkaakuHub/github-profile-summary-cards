@@ -71,6 +71,8 @@ export function createProductiveCard(chartData: number[], theme: Theme, utcOffse
         // animation preset references --gpsc-i; see src/utils/animation.ts.
         .style('--gpsc-i', (_: number, index: number) => String(index))
         .attr('fill', theme.chart)
+        .attr('rx', 2) // rounded top corners
+        .attr('ry', 2)
         .attr('x', function (_, index) {
             return bottomScaleBand(index)!;
         })
@@ -80,7 +82,9 @@ export function createProductiveCard(chartData: number[], theme: Theme, utcOffse
         .attr('width', bottomScaleBand.bandwidth())
         .attr('height', function (d) {
             return chartHeight - y(Number(d));
-        });
+        })
+        .style('filter', 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))')
+        .style('opacity', 0.9);
 
     chartPanel
         .append('g')
@@ -89,7 +93,9 @@ export function createProductiveCard(chartData: number[], theme: Theme, utcOffse
         .attr('y', 130)
         .attr('x', 220)
         .style('fill', theme.text)
-        .style('font-size', `10px`);
+        .style('font-size', `10px`)
+        .style('font-weight', '500')
+        .style('filter', 'drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1))');
 
     return card.toString();
 }
