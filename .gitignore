@@ -124,6 +124,8 @@ tags.*
 # Ignore built ts files
 lib/**/*
 tests/runner/*
+test-run.ts
+test-output/*
 
 # Ignore jest report
 junit.xml
