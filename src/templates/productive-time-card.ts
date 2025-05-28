@@ -84,11 +84,29 @@ export function createProductiveCard(chartData: number[], theme: Theme, utcOffse
             return chartHeight - y(Number(d));
         })
         .style('filter', 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))')
-        .style('opacity', 0.9);
+        .nodes()
+        .forEach((node: any, index: number) => {
+            const rect = d3.select(node);
+            rect.append('animate')
+                .attr('attributeName', 'opacity')
+                .attr('values', '0;0.9')
+                .attr('dur', '0.8s')
+                .attr('begin', `${index * 0.05}s`)
+                .attr('fill', 'freeze');
 
-    chartPanel
+            rect.append('animateTransform')
+                .attr('attributeName', 'transform')
+                .attr('type', 'scale')
+                .attr('values', '1,0;1,1')
+                .attr('dur', '0.8s')
+                .attr('begin', `${index * 0.05}s`)
+                .attr('fill', 'freeze');
+        });
+
+    const labelGroup = chartPanel
         .append('g')
         .append('text')
+        .attr('class', 'chart-label')
         .text('per day hour')
         .attr('y', 130)
         .attr('x', 220)
@@ -96,6 +114,14 @@ export function createProductiveCard(chartData: number[], theme: Theme, utcOffse
         .style('font-size', `10px`)
         .style('font-weight', '500')
         .style('filter', 'drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1))');
+
+    labelGroup
+        .append('animate')
+        .attr('attributeName', 'opacity')
+        .attr('values', '0;1')
+        .attr('dur', '0.6s')
+        .attr('begin', '1.2s')
+        .attr('fill', 'freeze');
 
     return card.toString();
 }
