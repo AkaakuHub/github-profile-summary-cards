@@ -1,3 +1,8 @@
+# 変更点
+以下のプロジェクトに加え、アニメーションを実装し、背景色を透過するよう加工。
+
+---
+
 <div align="center">
    <h1>GitHub Profile Summary Cards</h1>
 
