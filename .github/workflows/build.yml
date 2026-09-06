@@ -48,9 +48,9 @@ jobs:
           else
             git worktree add --detach "$publish_dir" HEAD
             git -C "$publish_dir" switch --orphan "$OUTPUT_BRANCH"
-            git -C "$publish_dir" clean -fdx
           fi
 
+          git -C "$publish_dir" clean -fdx
           cp -R profile-summary-card-output/. "$publish_dir/"
           git -C "$publish_dir" add -A
           if git -C "$publish_dir" diff --cached --quiet; then
