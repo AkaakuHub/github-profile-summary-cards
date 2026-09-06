@@ -17,8 +17,8 @@
         "generate:preview": "ts-node scripts/generate-preview-assets.ts",
         "dev": "node --watch -r ts-node/register scripts/dev-server.ts",
         "run": "node -r dotenv/config lib/app.js",
-        "all": "npm run build && npm run format && npm run lint && npm run package && npm test",
-        "mini-debug": "npx tsx src/test-run.ts"
+        "all": "pnpm run build && pnpm run format && pnpm run lint && pnpm run package && pnpm test",
+        "mini-debug": "pnpm dlx tsx src/test-run.ts"
     },
     "keywords": [
         "github"
@@ -81,5 +81,6 @@
     },
     "engines": {
         "node": "24.x"
-    }
+    },
+    "packageManager": "pnpm@9.15.0"
 }
