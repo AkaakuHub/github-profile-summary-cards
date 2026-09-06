@@ -2,28 +2,63 @@ name: Build
 
 on:
   schedule:
-    - cron: "* */24 * * *"
+    - cron: "0 0 * * *"
   workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-summary-card-output
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js 20
-      uses: actions/setup-node@v4
-      with:
-        node-version-file: '.node-version'
-        cache: 'npm'
-    - run: npm install
-    - run: npm run build
-    - run: npm run run ${{ github.repository_owner }} 9
-      env:
-        GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
-    - name: Push profile-summary-card-output
-      run: |
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git add -f profile-summary-card-output
-        git commit -m "Update profile-summary-card-output" || exit 0
-        git push
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.node-version'
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build
+      - run: pnpm run run ${{ github.repository_owner }} 9
+        env:
+          GITHUB_TOKEN: ${{ secrets.MY_TOKEN }}
+      - name: Publish profile-summary-card-output
+        env:
+          OUTPUT_BRANCH: profile-summary-card-output
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          publish_dir="$(mktemp -d)"
+          if git ls-remote --exit-code --heads origin "$OUTPUT_BRANCH" >/dev/null 2>&1; then
+            git fetch origin "$OUTPUT_BRANCH"
+            git worktree add --detach "$publish_dir" "origin/$OUTPUT_BRANCH"
+          else
+            git worktree add --detach "$publish_dir" HEAD
+            git -C "$publish_dir" switch --orphan "$OUTPUT_BRANCH"
+            git -C "$publish_dir" clean -fdx
+          fi
+
+          cp -R profile-summary-card-output/. "$publish_dir/"
+          git -C "$publish_dir" add -A
+          if git -C "$publish_dir" diff --cached --quiet; then
+            git worktree remove --force "$publish_dir"
+            echo "No profile summary card changes."
+            exit 0
+          fi
+
+          git -C "$publish_dir" commit -m "Update profile-summary-card-output"
+          git -C "$publish_dir" push origin "HEAD:$OUTPUT_BRANCH"
+          git worktree remove --force "$publish_dir"
