@@ -2,6 +2,36 @@ import {Card, TITLE_LINE_HEIGHT} from './card';
 import * as d3 from 'd3';
 import {Theme} from '../const/theme';
 
+type ContributionPoint = {contributionCount: number; date: Date};
+
+export const aggregateCompletedMonthlyContributions = (
+    contributionsData: ReadonlyArray<ContributionPoint>,
+    now: Date = new Date()
+): ContributionPoint[] => {
+    const currentMonthStart = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1);
+    const monthlyContributions = new Map<number, ContributionPoint>();
+
+    for (const contribution of contributionsData) {
+        const monthStart = Date.UTC(contribution.date.getUTCFullYear(), contribution.date.getUTCMonth(), 1);
+        if (monthStart >= currentMonthStart) continue;
+
+        const monthlyContribution = monthlyContributions.get(monthStart);
+        if (monthlyContribution) {
+            monthlyContribution.contributionCount += contribution.contributionCount;
+            continue;
+        }
+
+        monthlyContributions.set(monthStart, {
+            contributionCount: contribution.contributionCount,
+            date: new Date(monthStart)
+        });
+    }
+
+    return Array.from(monthlyContributions.values()).sort(
+        (first, second) => first.date.getTime() - second.date.getTime()
+    );
+};
+
 export function createDetailCard(
     title: string,
     userDetails: {
@@ -60,23 +90,7 @@ export function createDetailCard(
         .style('fill', theme.text)
         .style('font-size', `${labelHeight}px`);
 
-    // process chart data
-    const lineChartData: {contributionCount: number; date: Date}[] = [];
-    const formatter = d3.timeFormat('%Y-%m');
-    for (const data of contributionsData) {
-        const formatDate = formatter(data.date);
-        // Fix: Append day to ensure valid ISO 8601 date (YYYY-MM-DD) for reliable parsing
-        data.date = new Date(`${formatDate}-01`);
-        const lastIndex = lineChartData.length - 1;
-        if (lineChartData.length == 0 || lineChartData[lastIndex].date.getTime() !== data.date.getTime()) {
-            lineChartData.push({
-                contributionCount: data.contributionCount,
-                date: data.date
-            }); // use new object
-        } else {
-            lineChartData[lastIndex].contributionCount += data.contributionCount;
-        }
-    }
+    const lineChartData = aggregateCompletedMonthlyContributions(contributionsData);
 
     // prepare chart data
     const chartRightMargin = 30;
