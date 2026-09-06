@@ -14,13 +14,13 @@ flowchart LR
     main -->|every push| ci[CI + Vercel preview deploy]
 
     subgraph dw[Deploy workflow - quiet, no version]
-        dbuild["npm ci → build → ncc package dist/"]
+        dbuild["pnpm install → build → ncc package dist/"]
         drecreate["Force-recreate release branch from main + dist/"]
         dbuild --> drecreate
     end
 
     subgraph rw[Manual Release workflow - dispatch with tag]
-        build["npm ci → build → ncc package dist/"]
+        build["pnpm install → build → ncc package dist/"]
         recreate["Force-recreate release branch from main + dist/"]
         tag["Tag + GitHub Release (previous_tag pinned)"]
         build --> recreate --> tag

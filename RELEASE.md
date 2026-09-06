@@ -63,7 +63,7 @@ feature branch ──PR──▶ main ──(Manual Release dispatch)──▶ r
 
 The workflow then:
 
--   checks out `main`, runs `npm ci` → `npm run build` → `npm run package`
+-   checks out `main`, runs `pnpm install --frozen-lockfile` → `pnpm run build` → `pnpm run package`
     (produces `dist/`),
 -   recreates the `release` branch with the fresh `dist/` and force-pushes it,
     which **triggers the Vercel production deployment**,
