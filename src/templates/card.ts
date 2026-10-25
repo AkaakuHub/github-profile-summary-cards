@@ -38,11 +38,7 @@ export class Card {
         }
         text {
           font-weight: 600;
-          paint-order: stroke fill;
-          stroke: #fff;
-          stroke-width: 1px;
-          stroke-linejoin: round;
-          filter: drop-shadow(0 0 1px #111);
+          filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 1px rgba(255, 255, 255, 0.55));
         }`
         );
         // All visible content lives inside a transform-less wrapper group. A per-request

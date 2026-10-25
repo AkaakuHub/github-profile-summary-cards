@@ -111,8 +111,7 @@ export function createProductiveCard(chartData: number[], theme: Theme, utcOffse
         .attr('y', 130)
         .attr('x', 220)
         .style('fill', theme.text)
-        .style('font-size', `10px`)
-        .style('filter', 'drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1))');
+        .style('font-size', `10px`);
 
     labelGroup
         .append('animate')
