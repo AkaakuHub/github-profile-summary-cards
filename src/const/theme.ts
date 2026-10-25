@@ -33,6 +33,7 @@ export class Theme {
 ThemeMap.set('holi', new Theme('#5ea9eb', '#d6e7ff', '#ffffff00', '#d6e7ff', 1, '#5090cb', '#5090cb'));
 ThemeMap.set('2077', new Theme('#ff0055', '#03d8f3', '#ffffff00', '#141321', 1, '#fcee0c', '#00ffc8'));
 ThemeMap.set('algolia', new Theme('#00aeff', '#ffffff', '#ffffff00', '#000000', 0, '#2dde98', '#00aeff'));
+ThemeMap.set('amber', new Theme('#c87900', '#713c00', '#ffffff00', '#ffc83d', 1, '#f8b500', '#f8b500'));
 ThemeMap.set('apprentice', new Theme('#ffffff', '#bcbcbc', '#ffffff00', '#000000', 0, '#ffffaf', '#ffffff'));
 ThemeMap.set('aura_dark', new Theme('#ff7372', '#dbdbdb', '#ffffff00', '#000000', 0, '#6cffd0', '#ff7372'));
 ThemeMap.set('aura', new Theme('#a277ff', '#61ffca', '#ffffff00', '#000000', 0, '#ffca85', '#a277ff'));

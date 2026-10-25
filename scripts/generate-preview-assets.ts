@@ -23,6 +23,7 @@ function render(card: string, theme: string, animation?: AnimationName): string 
 // no animation so the grid stays calm and it's about the colours.
 const THEME_TABLE = [
     'default',
+    'amber',
     '2077',
     'dracula',
     'github',
@@ -52,7 +53,7 @@ const HERO: [string, string][] = [
     ['productive-time', '4-productive-time']
 ];
 for (const [card, file] of HERO) {
-    write(`hero/${file}.svg`, render(card, 'solarized', 'load'));
+    write(`hero/${file}.svg`, render(card, 'amber', 'load'));
 }
 
 // 3. Animation showcase — one representative card per preset (baked-in animation).
