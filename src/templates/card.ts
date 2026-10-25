@@ -35,6 +35,9 @@ export class Card {
         svgRoot.append('style').html(
             `* {
           font-family: 'Segoe UI', Ubuntu, "Helvetica Neue", Sans-Serif
+        }
+        text {
+          font-weight: 600
         }`
         );
         // All visible content lives inside a transform-less wrapper group. A per-request

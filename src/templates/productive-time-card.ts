@@ -112,7 +112,6 @@ export function createProductiveCard(chartData: number[], theme: Theme, utcOffse
         .attr('x', 220)
         .style('fill', theme.text)
         .style('font-size', `10px`)
-        .style('font-weight', '500')
         .style('filter', 'drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1))');
 
     labelGroup
