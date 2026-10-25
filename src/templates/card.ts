@@ -32,12 +32,16 @@ export class Card {
             .attr('width', width)
             .attr('height', height)
             .attr('viewBox', `0 0 ${this.width} ${this.height}`);
+        const textStroke = theme.textStroke
+            ? `paint-order: stroke; stroke: ${theme.textStroke}; stroke-width: 1px; stroke-linejoin: round;`
+            : '';
         svgRoot.append('style').html(
             `* {
           font-family: 'Segoe UI', Ubuntu, "Helvetica Neue", Sans-Serif
         }
         text {
-          font-weight: 600
+          font-weight: 600;
+          ${textStroke}
         }`
         );
         // All visible content lives inside a transform-less wrapper group. A per-request

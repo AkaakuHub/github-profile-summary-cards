@@ -8,6 +8,7 @@ export class Theme {
     strokeOpacity: number;
     icon: string;
     chart: string;
+    textStroke?: string;
     constructor(
         title: string,
         text: string,
@@ -15,7 +16,8 @@ export class Theme {
         stroke: string,
         strokeOpacity: number,
         icon: string,
-        chart: string
+        chart: string,
+        textStroke?: string
     ) {
         this.title = title;
         this.text = text;
@@ -24,6 +26,7 @@ export class Theme {
         this.strokeOpacity = strokeOpacity;
         this.icon = icon;
         this.chart = chart;
+        this.textStroke = textStroke;
     }
 }
 
@@ -33,7 +36,7 @@ export class Theme {
 ThemeMap.set('holi', new Theme('#5ea9eb', '#d6e7ff', '#ffffff00', '#d6e7ff', 1, '#5090cb', '#5090cb'));
 ThemeMap.set('2077', new Theme('#ff0055', '#03d8f3', '#ffffff00', '#141321', 1, '#fcee0c', '#00ffc8'));
 ThemeMap.set('algolia', new Theme('#00aeff', '#ffffff', '#ffffff00', '#000000', 0, '#2dde98', '#00aeff'));
-ThemeMap.set('amber', new Theme('#f8b500', '#fff7e0', '#ffffff00', '#c87900', 1, '#ffd875', '#f8b500'));
+ThemeMap.set('amber', new Theme('#f8b500', '#fff7e0', '#ffffff00', '#c87900', 1, '#ffd875', '#f8b500', '#713c00'));
 ThemeMap.set('apprentice', new Theme('#ffffff', '#bcbcbc', '#ffffff00', '#000000', 0, '#ffffaf', '#ffffff'));
 ThemeMap.set('aura_dark', new Theme('#ff7372', '#dbdbdb', '#ffffff00', '#000000', 0, '#6cffd0', '#ff7372'));
 ThemeMap.set('aura', new Theme('#a277ff', '#61ffca', '#ffffff00', '#000000', 0, '#ffca85', '#a277ff'));
@@ -149,6 +152,7 @@ export function resolveTheme(themeName: string, override?: ThemeColorOverride): 
         override?.border ?? base.stroke,
         base.strokeOpacity,
         override?.icon ?? base.icon,
-        override?.chart ?? base.chart
+        override?.chart ?? base.chart,
+        base.textStroke
     );
 }
